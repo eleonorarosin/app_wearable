@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+
 class Splash extends StatelessWidget {
   static const route = '/splash/';
   static const routeDisplayName = 'SplashPage';
 
   const Splash({Key? key}) : super(key: key);
+
+  // Method for navigation SplashPage -> HomePage
+  void _toHomePage(BuildContext context) {
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+  } //_toHomePage
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,7 @@ class Splash extends StatelessWidget {
               children: <Widget>[
                 Icon(Icons.energy_savings_leaf),
                 CircularProgressIndicator(
-                  strokeWidth: 8,
+                  strokeWidth: 4,
                   valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF89453C)),
                 ),
               ],
