@@ -16,6 +16,7 @@ class Splash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(const Duration(seconds: 3), () => _toHomePage(context));
     return Material(
       child: Container(
         color: Color.fromARGB(255, 213, 243, 230),
