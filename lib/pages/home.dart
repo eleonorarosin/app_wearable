@@ -17,12 +17,12 @@ class _HomeState extends State<Home> {
 
   List<BottomNavigationBarItem> navBarItems = [
     const BottomNavigationBarItem(
-      icon: Icon(MdiIcons.imageFilterDrama),
-      label: 'Air Pollution',
+      icon: Icon(MdiIcons.walk),
+      label: 'Activity',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(MdiIcons.dotsHexagon),
-      label: 'Personal Exposure',
+      icon: Icon(MdiIcons.moleculeCo2),
+      label: 'Carbon print',
     ),
   ];
 
