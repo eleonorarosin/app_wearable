@@ -19,7 +19,7 @@ class Splash extends StatelessWidget {
     Future.delayed(const Duration(seconds: 3), () => _toHomePage(context));
     return Material(
       child: Container(
-        color: Color.fromARGB(255, 213, 243, 230),
+        color: Color.fromARGB(255, 228, 223, 212),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[

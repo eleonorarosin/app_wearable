@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
     ),
     const BottomNavigationBarItem(
       icon: Icon(MdiIcons.moleculeCo2),
-      label: 'Carbon print',
+      label: ('Carbon print'),
     ),
   ];
 
@@ -83,7 +83,8 @@ class _HomeState extends State<Home> {
           ),
         ),
         appBar: AppBar(
-          iconTheme: const IconThemeData(color: Color(0xFF89453C)),
+          iconTheme:
+              const IconThemeData(color: Color.fromARGB(255, 8, 112, 24)),
           elevation: 0,
           backgroundColor: const Color(0xFFE4DFD4),
           actions: [
@@ -100,15 +101,15 @@ class _HomeState extends State<Home> {
                   icon: const Icon(
                     MdiIcons.accountCircle,
                     size: 40,
-                    color: Color(0xFF89453C),
+                    color: Color.fromARGB(255, 8, 112, 24),
                   )),
             )
           ],
         ),
         //body: _selectPage(index: _selIdx),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color(0xFF83AA99),
-          selectedItemColor: const Color(0xFF89453C),
+          backgroundColor: Color.fromARGB(255, 8, 112, 24),
+          selectedItemColor: const Color.fromARGB(255, 228, 223, 212),
           items: navBarItems,
           currentIndex: _selIdx,
           onTap: _onItemTapped,
