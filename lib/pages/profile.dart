@@ -13,11 +13,12 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 213, 243, 230),
+        backgroundColor: Color.fromARGB(255, 228, 223, 212),
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Color.fromARGB(255, 213, 243, 230),
-          iconTheme: const IconThemeData(color: Color.fromARGB(255, 33, 80, 5)),
+          backgroundColor: Color.fromARGB(255, 228, 223, 212),
+          iconTheme:
+              const IconThemeData(color: Color.fromARGB(255, 8, 112, 24)),
           title:
               const Text('Information', style: TextStyle(color: Colors.black)),
         ),
@@ -40,10 +41,11 @@ class Profile extends StatelessWidget {
                         const SizedBox(width: 10),
                         const Text('Gender',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 33, 80, 5), fontSize: 17)),
+                                color: Color.fromARGB(255, 8, 112, 24),
+                                fontSize: 17)),
                         Radio(
                           fillColor: MaterialStateColor.resolveWith(
-                              (states) => Color.fromARGB(255, 33, 80, 5)),
+                              (states) => Color.fromARGB(255, 8, 112, 24)),
                           value: 1,
                           groupValue: 1,
                           onChanged: (val) {},
@@ -54,7 +56,7 @@ class Profile extends StatelessWidget {
                         ),
                         Radio(
                             fillColor: MaterialStateColor.resolveWith(
-                                (states) => Color.fromARGB(255, 33, 80, 5)),
+                                (states) => Color.fromARGB(255, 8, 112, 24)),
                             value: 2,
                             groupValue: 1,
                             onChanged: (val) {}),
@@ -84,9 +86,11 @@ class Profile extends StatelessWidget {
                               border: OutlineInputBorder(),
                               focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                      width: 1, color: Color.fromARGB(255, 33, 80, 5))),
+                                      width: 1,
+                                      color: Color.fromARGB(255, 8, 112, 24))),
                               labelText: 'Age',
-                              labelStyle: TextStyle(color:Color.fromARGB(255, 33, 80, 5)))),
+                              labelStyle: TextStyle(
+                                  color: Color.fromARGB(255, 8, 112, 24)))),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -96,7 +100,8 @@ class Profile extends StatelessWidget {
                               if (_formKey.currentState!.validate()) {}
                             },
                             style: ElevatedButton.styleFrom(
-                                backgroundColor:Color.fromARGB(255, 33, 80, 5),
+                                backgroundColor:
+                                    Color.fromARGB(255, 8, 112, 24),
                                 shape: const CircleBorder()),
                             child: const Icon(Icons.check)),
                       ],
