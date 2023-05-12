@@ -24,14 +24,14 @@ class _SplashState extends State<Splash> {
     "Every small action counts towards sustainable development.",
     "We need to protect and preserve our natural resources for sustainable development.",
     "Sustainable development is not a choice, it's a necessity for our survival.",
-    "A sustainable lifestyle is not only good for the environment but also for our health and wellbeing."
-        "Sustainable development is about respecting the limits of our planet and its resources.",
+    "A sustainable lifestyle is not only good for the environment but also for our health and wellbeing.",
+    "Sustainable development is about respecting the limits of our planet and its resources.",
     "Sustainability is the key to a better future for all.",
     "Sustainable choices lead to a healthier planet.",
     "We can all make a difference by choosing sustainable options.",
-    "Sustainability is about meeting our needs without compromising the needs of future generations."
-        "Sustainability is the path to a brighter and more sustainable future."
-        "Sustainable living can save money and resources in the long run.",
+    "Sustainability is about meeting our needs without compromising the needs of future generations.",
+    "Sustainability is the path to a brighter and more sustainable future.",
+    "Sustainable living can save money and resources in the long run.",
     "Sustainability is about creating a world that works for everyone.",
     "Sustainable solutions are the only way forward for a better future."
   ];
@@ -48,7 +48,7 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     Future.delayed(
-        const Duration(seconds: 7),
+        const Duration(seconds: 5),
         () => Navigator.of(context)
             .pushReplacement(MaterialPageRoute(builder: (context) => Home())));
 
