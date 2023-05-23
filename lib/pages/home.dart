@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:app_wearable/pages/profile.dart';
+import 'package:app_wearable/pages/info.dart';
 
 class Home extends StatefulWidget {
   static const route = '/home/';
@@ -61,15 +62,15 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.all(8.0),
                 child: Text('About'),
               ),
-              /*ListTile(
-                  leading: const Icon(MdiIcons.imageFilterDrama),
+              ListTile(
+                  leading: const Icon(MdiIcons.informationOutline),
                   title: const Text('Pollution Information'),
                   // delete all data from the database
                   onTap: () => {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => InfoPollutants(),
+                          builder: (context) => InfoApp(),
                         ))
-                      }),*/
+                      }),
               /*ListTile(
                   leading: const Icon(MdiIcons.dotsHexagon),
                   title: const Text('Exposure Information'),
