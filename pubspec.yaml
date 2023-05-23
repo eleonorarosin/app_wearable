@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
   feather_icons: ^1.2.0
   material_design_icons_flutter: ^6.0.7096
+  syncfusion_flutter_charts: ^21.2.6
+  intl: ^0.18.0
 
 
 

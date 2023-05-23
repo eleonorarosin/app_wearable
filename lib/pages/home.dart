@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:app_wearable/pages/profile.dart';
 import 'package:app_wearable/pages/info.dart';
+import 'package:app_wearable/pages/walk.dart';
 
 class Home extends StatefulWidget {
   static const route = '/home/';
   static const routeDisplayName = 'HomePage';
 
-  const Home({Key? key}) : super(key: key);
+  Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -33,18 +34,18 @@ class _HomeState extends State<Home> {
     });
   }
 
-  /*Widget _selectPage({
+  Widget _selectPage({
     required int index,
   }) {
     switch (index) {
       case 0:
-        return const Pollutants();
+        return Walk();
       case 1:
-        return const Exposure();
+        return Walk();
       default:
-        return const Pollutants();
+        return Walk();
     }
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +108,7 @@ class _HomeState extends State<Home> {
             )
           ],*/
         ),
-        //body: _selectPage(index: _selIdx),
+        body: _selectPage(index: _selIdx),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Color.fromARGB(255, 8, 112, 24),
           selectedItemColor: const Color.fromARGB(255, 228, 223, 212),
