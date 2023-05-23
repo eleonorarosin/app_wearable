@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
               ),
               ListTile(
                   leading: const Icon(MdiIcons.informationOutline),
-                  title: const Text('Pollution Information'),
+                  title: const Text('App Information'),
                   // delete all data from the database
                   onTap: () => {
                         Navigator.of(context).push(MaterialPageRoute(

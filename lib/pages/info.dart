@@ -25,10 +25,10 @@ class InfoApp extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    'Personal Exposure',
+                    'App info',
                     style: TextStyle(
                         color: Color.fromARGB(255, 8, 112, 24),
-                        fontSize: 40,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
