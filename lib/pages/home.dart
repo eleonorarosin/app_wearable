@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:app_wearable/pages/profile.dart';
+import 'package:provider/provider.dart';
+import 'package:app_wearable/providers/home_provider.dart';
 import 'package:app_wearable/pages/info.dart';
 import 'package:app_wearable/pages/walk.dart';
 
@@ -49,7 +51,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ChangeNotifierProvider<HomeProvider>(
+      create: (context) => HomeProvider(),
+      builder: (context, child) => Scaffold(
         backgroundColor: const Color(0xFFE4DFD4),
         drawer: Drawer(
           child: ListView(
@@ -89,24 +93,6 @@ class _HomeState extends State<Home> {
               const IconThemeData(color: Color.fromARGB(255, 8, 112, 24)),
           elevation: 0,
           backgroundColor: const Color(0xFFE4DFD4),
-          /*actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            fullscreenDialog: true,
-                            builder: (context) => Profile()));
-                  },
-                  icon: const Icon(
-                    MdiIcons.accountCircle,
-                    size: 40,
-                    color: Color.fromARGB(255, 8, 112, 24),
-                  )),
-            )
-          ],*/
         ),
         body: _selectPage(index: _selIdx),
         bottomNavigationBar: BottomNavigationBar(
@@ -115,6 +101,6 @@ class _HomeState extends State<Home> {
           items: navBarItems,
           currentIndex: _selIdx,
           onTap: _onItemTapped,
-        ));
+        )));
   }
 }
