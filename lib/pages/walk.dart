@@ -50,153 +50,166 @@ List<Map<String, dynamic>> data = [
   {'date': '2021-10-14', 'points': 1527},
 ];
 
-class Walk extends StatefulWidget {
+class Walk extends StatelessWidget {
   static const route = '/Walk/';
   static const routeDisplayName = 'WalkPage';
 
   Walk({Key? key}) : super(key: key);
 
-  @override
-  State<Walk> createState() => _WalkState();
-}
-
-class _WalkState extends State<Walk> {
-  double exposure = 2.5;
+  double steps= 2.5; //steps lo definizmo intero?
   DateTime day = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Text(
-            'Daily Activity',
-            style: TextStyle(
-              color: Color.fromARGB(255, 8, 112, 24),
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+      child:  Consumer<HomeProvider>(
+        builder: (context, provider, child) => Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text(
+              'Daily Activity',
+              style: TextStyle(
+                color: Color.fromARGB(255, 8, 112, 24),
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            'Exposure Trend',
-            style: TextStyle(
-              color: Color.fromARGB(255, 8, 112, 24),
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: 150,
-              height: 150,
-              child: SfCircularChart(
-                series: <CircularSeries>[
-                  RadialBarSeries<Map<String, dynamic>, String>(
-                    dataSource: <Map<String, dynamic>>[
-                      {'exposure': exposure},
-                    ],
-                    xValueMapper: (Map<String, dynamic> data, _) => 'exposure',
-                    yValueMapper: (Map<String, dynamic> data, _) =>
-                        data['exposure'],
-                    trackColor: const Color(0xFFE4DFD4),
-                    maximumValue: 5.0,
-                    enableTooltip: false,
-                  ),
-                ],
-                annotations: <CircularChartAnnotation>[
-                  CircularChartAnnotation(
-                    widget: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '$exposure',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Color.fromARGB(255, 8, 112, 24),
+            const Text(
+              'Steps Trend',
+              style: TextStyle(
+                color: Color.fromARGB(255, 8, 112, 24),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: 150,
+                height: 150,
+                child: SfCircularChart(
+                  series: <CircularSeries>[
+                    RadialBarSeries<Map<String, dynamic>, String>(
+                      dataSource: <Map<String, dynamic>>[
+                        {'steps': provider.steps}, //ci vanno i dati di steps, basta fare provider.steps
+                      ],
+                      xValueMapper: (Map<String, dynamic> data, _) => 'steps',
+                      yValueMapper: (Map<String, dynamic> data, _) =>
+                          data['steps'],
+                      trackColor: const Color(0xFFE4DFD4),
+                      maximumValue: 5.0,
+                      enableTooltip: false,
+                    ),
+                  ],
+                  annotations: <CircularChartAnnotation>[
+                    CircularChartAnnotation(
+                      widget: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '$steps', //numero di passi totali
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Color.fromARGB(255, 8, 112, 24),
+                              ),
                             ),
-                          ),
-                          const Text(
-                            'Low',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
+                            /*const Text( // scritta sotto il num di passi, si può mettere /10000 o frasi varie
+                              'Low',
+                              style: TextStyle(fontSize: 16),
+                            ),*/
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const Text(
-            'Weekly Trend',
-            style: TextStyle(
-              color: Color.fromARGB(255, 8, 112, 24),
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.navigate_before),
-                onPressed: () {
-                  setState(() {
-                    day = day.subtract(const Duration(days: 1));
-                  });
-                },
-              ),
-              Text(DateFormat('dd MMMM yyyy').format(day)),
-              IconButton(
-                icon: const Icon(Icons.navigate_next),
-                onPressed: () {
-                  setState(() {
-                    day = day.add(const Duration(days: 1));
-                  });
-                },
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 200,
-            child: SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
-              primaryYAxis: NumericAxis(),
-              series: <ChartSeries>[
-                ColumnSeries<Map<String, dynamic>, String>(
-                  dataSource: data
-                      .where(
-                        (element) =>
-                            DateTime.parse(element['date']).isAfter(
-                                day.subtract(const Duration(days: 7))) &&
-                            DateTime.parse(element['date']).isBefore(day),
-                      )
-                      .toList(),
-                  xValueMapper: (Map<String, dynamic> data, _) =>
-                      data['date'].toString(),
-                  yValueMapper: (Map<String, dynamic> data, _) =>
-                      data['points'],
+                  ],
                 ),
+              ),
+            ),
+            const Text(
+              'Weekly Trend',
+              style: TextStyle(
+                color: Color.fromARGB(255, 8, 112, 24),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                    icon: const Icon(Icons.navigate_before),
+                    onPressed: () {
+                      // here we use the access method to retrieve the Provider and use its values and methods
+                      final provider =
+                          Provider.of<HomeProvider>(context, listen: false);
+                      DateTime day = provider.showDate;
+                      provider
+                          .getDataOfDay(day.subtract(const Duration(days: 1)));
+                    }),
+                Consumer<HomeProvider>(
+                    builder: (context, value, child) => Text(
+                        DateFormat('dd MMMM yyyy').format(value.showDate))),
+                IconButton(
+                    icon: const Icon(Icons.navigate_next),
+                    onPressed: () {
+                      final provider =
+                          Provider.of<HomeProvider>(context, listen: false);
+                      DateTime day = provider.showDate;
+                      provider.getDataOfDay(day.add(const Duration(days: 1)));
+                    })
               ],
             ),
-          ),
-        ],
-      ),
-    );
+            Consumer<HomeProvider>(
+                builder: (context, value, child) =>
+                  SizedBox(
+                    height: 200,
+                    child: SfCartesianChart(
+                      primaryXAxis: CategoryAxis(),
+                      primaryYAxis: NumericAxis(),
+                      series: <ChartSeries>[
+                        ColumnSeries<Map<String, dynamic>, String>(
+                          dataSource: data
+                              .where(
+                                (element) =>
+                                    DateTime.parse(element['date']).isAfter(
+                                        day.subtract(const Duration(days: 7))) &&
+                                    DateTime.parse(element['date']).isBefore(day),
+                              )
+                              .toList(),
+                          xValueMapper: (Map<String, dynamic> data, _) =>
+                              data['date'].toString(),
+                          yValueMapper: (Map<String, dynamic> data, _) =>
+                              data['points'],
+                        ),
+                      ],
+                    ),
+                  ),
+                )            
+          ],
+        ),
+    ));
   }
+  /*List<Map<String, dynamic>> _parseData(List<db.Exposure> data) {  //formato corretto dei dati
+    return data
+        .map(
+          (e) => {
+            'date': DateFormat('HH:mm').format(e.timestamp),
+            'points': e.value
+          },
+        )
+        .toList();
+  }*/
 }
