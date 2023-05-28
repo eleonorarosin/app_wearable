@@ -1,19 +1,19 @@
 import 'dart:math';
 
 class Distance {
-  // this class models the single heart rate data point
+  // this class models the distance data point
   final DateTime timestamp;
   final double value;
 
   Distance({required this.timestamp, required this.value});
 }
 
-class Walk {
-  // this class models the single PM2.5 data point
+class Steps {
+  // this class models the steps data point
   final DateTime timestamp;
   final double value;
 
-  Walk({required this.timestamp, required this.value});
+  Steps({required this.timestamp, required this.value});
 }
 
 
@@ -27,23 +27,19 @@ class FitbitGen {
             timestamp: DateTime.now().subtract(Duration(hours: index)),
             value: _random.nextDouble()));
   }
-  List<Walk> fetchWalk() {
+  List<Steps> fetchSteps() {
     return List.generate(
         100,
-        (index) => Walk(
+        (index) => Steps(
             timestamp: DateTime.now().subtract(Duration(hours: index)),
             value: _random.nextDouble()));
   }
 }
 
-/*class CarbonPrint {
-  final Random _random = Random();
-  List<Distance> fetchPM() {
-    return List.generate(
-        100,
-        (index) => Distance(
-            timestamp: DateTime.now().subtract(Duration(hours: index)),
-            value: _random.nextInt(1000)));
-  }
+class CarbonPrint {
+    // this class models the steps data point
+  final DateTime timestamp;
+  final double value;
 
-}*/
+  CarbonPrint({required this.timestamp, required this.value});
+}

@@ -8,52 +8,51 @@ import 'package:app_wearable/models/db.dart';
 class HomeProvider extends ChangeNotifier {
   // data to be used by the UI
   late List<Distance> distance;
-  late List<Walk> walk;
-  late double carbonPrint;
+  late List<Steps> steps;
+  late List<CarbonPrint> carbonPrint;
   late double fullprint;
-  //late double fullexposure;
+  //late double consumption;
+  
 
   // data fetched from external services or db
   late List<Distance> _distanceDB;
-  late List<Walk> _walkDB;
+  late List<Steps> _stepsDB;
+  late List<CarbonPrint> _carbonPrintDB;
 
   // selected day of data to be shown
   DateTime showDate = DateTime.now();
 
   // data generators faking external services
   final FitbitGen fitbitGen = FitbitGen();
-  //final PurpleAirGen purpleAirGen = PurpleAirGen();
   final Random _random = Random();
 
   // constructor of provider which manages the fetching of all data from the servers and then notifies the ui to build
   HomeProvider() {
     _fetchAndCalculate();
     getDataOfDay(showDate);
-    carbonPrint = _random.nextDouble()*100;
   }
 
   // method to fetch all data and calculate the exposure
   void _fetchAndCalculate() {
     _distanceDB = fitbitGen.fetchDistance();
-    _walkDB = fitbitGen.fetchWalk();
-    //_calculateExposure();
+    _stepsDB = fitbitGen.fetchSteps();
+    _calculateCarbonPrint();
   }
 
   // method to trigger a new data fetching
   void refresh() {
     _fetchAndCalculate();
     getDataOfDay(showDate);
-    carbonPrint = _random.nextDouble()*100;
   }
 
   // method that implements the state of the art formula
-  /*void _calculateExposure() {
-    _exposureDB = List.generate(
+  void _calculateCarbonPrint() {
+    _carbonPrintDB = List.generate(
         100,
-        (index) => Exposure(
-            value: _heartRatesDB[index].value * _pm25DB[index].value,
+        (index) => CarbonPrint(
+            value: _distanceDB[index].value ,/** consumption,*/
             timestamp: DateTime.now().subtract(Duration(hours: index))));
-  }*/
+  }
 
   // method to select only the data of the chosen day
   void getDataOfDay(DateTime showDate) {
@@ -63,7 +62,7 @@ class HomeProvider extends ChangeNotifier {
         .toList()
         .reversed
         .toList();
-    walk = _walkDB
+    steps = _stepsDB
         .where((element) => element.timestamp.day == showDate.day)
         .toList()
         .reversed

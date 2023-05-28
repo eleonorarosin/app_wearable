@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:app_wearable/pages/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:app_wearable/providers/home_provider.dart';
 import 'package:app_wearable/pages/info.dart';
@@ -93,6 +92,17 @@ class _HomeState extends State<Home> {
               const IconThemeData(color: Color.fromARGB(255, 8, 112, 24)),
           elevation: 0,
           backgroundColor: const Color(0xFFE4DFD4),
+          actions: [
+              IconButton(
+                  padding: const EdgeInsets.only(left: 8.0, top: 8, bottom: 8),
+                  onPressed: () async {
+                    Provider.of<HomeProvider>(context, listen: false).refresh();
+                  },
+                  icon: const Icon(
+                    MdiIcons.downloadCircle,
+                    size: 30,
+                    color: Color.fromARGB(255, 8, 112, 24),
+                  )),]
         ),
         body: _selectPage(index: _selIdx),
         bottomNavigationBar: BottomNavigationBar(

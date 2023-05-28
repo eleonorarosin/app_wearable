@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:app_wearable/models/db.dart' as db;
+import 'package:app_wearable/providers/home_provider.dart';
+import 'package:provider/provider.dart';
+
 
 List<Map<String, dynamic>> data = [
   {'date': '2023-05-23', 'points': 1468},
