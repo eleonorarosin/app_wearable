@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:app_wearable/providers/home_provider.dart';
 import 'package:app_wearable/pages/info.dart';
 import 'package:app_wearable/pages/walk.dart';
+import 'package:app_wearable/pages/login/login.dart';
+import 'package:app_wearable/services/server_strings.dart';
+import 'package:app_wearable/utils/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   static const route = '/home/';
@@ -61,7 +64,12 @@ class _HomeState extends State<Home> {
                   leading: const Icon(MdiIcons.logout),
                   title: const Text('Logout'),
                   // delete all data from the database
-                  onTap: () => {}),
+                  onTap: () async {
+                    bool reset = await Preferences().resetSettings();
+                      if (reset) {
+                        Navigator.of(context).pushReplacementNamed(Login.route);
+                      }
+                  }),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text('About'),
@@ -97,6 +105,7 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.only(left: 8.0, top: 8, bottom: 8),
                   onPressed: () async {
                     Provider.of<HomeProvider>(context, listen: false).refresh();
+
                   },
                   icon: const Icon(
                     MdiIcons.downloadCircle,

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'home.dart';
+import 'package:app_wearable/pages/login/login.dart';
+import 'package:app_wearable/pages/onboarding/impact_ob.dart';
+import 'package:app_wearable/services/impact.dart';
+import 'package:app_wearable/utils/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
-class Splash extends StatefulWidget {
+
+class Splash extends StatelessWidget {
   static const route = '/splash/';
   static const routeDisplayName = 'SplashPage';
 
-  const Splash({Key? key}) : super(key: key);
+  Splash({Key? key}) : super(key: key);
 
-  @override
-  _SplashState createState() => _SplashState();
-}
-
-class _SplashState extends State<Splash> {
   final List<String> _sustainabilityMessages = [
     "Education for sustainable development is crucial for creating a more sustainable future.",
     "Sustainable lifestyles are essential for preserving our planet for future generations.",
@@ -40,17 +41,60 @@ class _SplashState extends State<Splash> {
 
   @override
   void initState() {
-    super.initState();
+   // super.initState();
     _randomMessage = _sustainabilityMessages[
         Random().nextInt(_sustainabilityMessages.length)];
+  }
+
+    // Method for navigation SplashPage -> LoginPage
+  void _toLoginPage(BuildContext context) {
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: ((context) => Login())));
+  } //_toLoginPage
+
+  // Method for navigation SplashPage -> HomePage
+  void _toHomePage(BuildContext context) {
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: ((context) => Home())));
+  } //_toHomePage
+
+  // Method for navigation SplashPage -> Impact
+  void _toImpactPage(BuildContext context) {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: ((context) => ImpactOnboarding())));
+  }
+
+void _checkAuth(BuildContext context) async {
+    var prefs = Provider.of<Preferences>(context, listen: false);  //senza il provider va inizializzato 
+    String? username = prefs.username;
+    String? password = prefs.password;
+
+    // no user logged in the app
+    if (username == null || password == null) {
+      Future.delayed(const Duration(seconds: 1), () => _toLoginPage(context));
+    } 
+    else {
+      ImpactService service =
+          Provider.of<ImpactService>(context, listen: false);
+      bool responseAccessToken = await service.checkSavedToken(); //verifico i token corretti
+      bool refreshAccessToken = await service.checkSavedToken(refresh: true);
+
+      // if we have a valid token for impact, proceed. verifico se purple air ha la pagina salvata
+      if (responseAccessToken || refreshAccessToken) {
+        Future.delayed(
+              const Duration(seconds: 1), () => _toHomePage(context));
+      } else {
+        Future.delayed(
+            const Duration(seconds: 1), () => _toImpactPage(context));
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     Future.delayed(
         const Duration(seconds: 5),
-        () => Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => Home())));
+        () => _checkAuth( context));
 
     return Material(
       child: Container(
