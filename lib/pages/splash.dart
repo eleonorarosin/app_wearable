@@ -39,12 +39,12 @@ class Splash extends StatelessWidget {
 
   String? _randomMessage;
 
-  @override
-  void initState() {
+  
+  /*void initState() {
    // super.initState();
     _randomMessage = _sustainabilityMessages[
         Random().nextInt(_sustainabilityMessages.length)];
-  }
+  }*/
 
     // Method for navigation SplashPage -> LoginPage
   void _toLoginPage(BuildContext context) {
@@ -95,7 +95,8 @@ void _checkAuth(BuildContext context) async {
     Future.delayed(
         const Duration(seconds: 5),
         () => _checkAuth( context));
-
+    _randomMessage = _sustainabilityMessages[
+        Random().nextInt(_sustainabilityMessages.length)];
     return Material(
       child: Container(
         color: Color.fromARGB(255, 228, 223, 212),
