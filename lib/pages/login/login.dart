@@ -1,8 +1,7 @@
 import 'package:app_wearable/pages/onboarding/impact_ob.dart';
 import 'package:app_wearable/utils/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:app_wearable/pages/home.dart';
-import 'package:flutter_login/flutter_login.dart';
+//import 'package:app_wearable/pages/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
@@ -31,13 +30,13 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE4DFD4),
+      backgroundColor: const Color.fromARGB(255, 228, 223, 212),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFFE4DFD4),
+        backgroundColor: const Color.fromARGB(255, 228, 223, 212),
         title: const Text('GreenSteps',
             style: TextStyle(
-                color: Color(0xFF83AA99),
+                color: Color.fromARGB(255, 20, 134, 37),
                 fontSize: 28,
                 fontWeight: FontWeight.bold)),
       ),
@@ -49,7 +48,7 @@ class _LoginState extends State<Login> {
             children: <Widget>[
               const Text('Login',
                   style: TextStyle(
-                      color: Color(0xFF89453C),
+                      color: Color.fromARGB(255, 20, 134, 37),
                       fontSize: 28,
                       fontWeight: FontWeight.bold)),
               const Text('Please login to use our app',
@@ -78,22 +77,22 @@ class _LoginState extends State<Login> {
                   return null;
                 },
                 controller: userController,
-                cursorColor: const Color(0xFF83AA99),
+                cursorColor: const Color.fromARGB(255, 20, 134, 37),
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: const BorderSide(
-                      color: Color(0xFF89453C),
+                      color: Color.fromARGB(255, 20, 134, 37),
                     ),
                   ),
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   prefixIcon: const Icon(
                     Icons.person,
-                    color: Color(0xFF89453C),
+                    color: Color.fromARGB(255, 20, 134, 37),
                   ),
                   hintText: 'Username',
-                  hintStyle: const TextStyle(color: Color(0xFF89453C)),
+                  hintStyle: const TextStyle(color: Color.fromARGB(255, 20, 134, 37)),
                 ),
               ),
               const SizedBox(
@@ -118,20 +117,20 @@ class _LoginState extends State<Login> {
                   return null;
                 },
                 controller: passwordController,
-                cursorColor: const Color(0xFF83AA99),
+                cursorColor: Color.fromARGB(255, 20, 134, 37),
                 obscureText: !_passwordVisible,
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                     borderSide: const BorderSide(
-                      color: Color(0xFF89453C),
+                      color: Color.fromARGB(255, 20, 134, 37),
                     ),
                   ),
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
                   prefixIcon: const Icon(
                     Icons.lock,
-                    color: Color(0xFF89453C),
+                    color:Color.fromARGB(255, 20, 134, 37),
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -146,7 +145,7 @@ class _LoginState extends State<Login> {
                     },
                   ),
                   hintText: 'Password',
-                  hintStyle: const TextStyle(color: Color(0xFF89453C)),
+                  hintStyle: const TextStyle(color: Color.fromARGB(255, 20, 134, 37)),
                 ),
               ),
               const Spacer(),
@@ -176,7 +175,7 @@ class _LoginState extends State<Login> {
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
                         backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color(0xFF89453C))),
+                            const Color.fromARGB(255, 20, 134, 37))),
                     child: const Text('Log In'),
                   ),
                 ),
