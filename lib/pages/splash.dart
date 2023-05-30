@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'home.dart';
-import 'package:app_wearable/pages/login/login.dart';
+//import 'package:app_wearable/pages/login/login.dart';
 import 'package:app_wearable/pages/onboarding/impact_ob.dart';
 import 'package:app_wearable/services/impact.dart';
 import 'package:app_wearable/utils/shared_preferences.dart';
@@ -47,10 +47,10 @@ class Splash extends StatelessWidget {
   }*/
 
     // Method for navigation SplashPage -> LoginPage
-  void _toLoginPage(BuildContext context) {
+ /* void _toLoginPage(BuildContext context) {
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: ((context) => Login())));
-  } //_toLoginPage
+  } //_toLoginPage*/
 
   // Method for navigation SplashPage -> HomePage
   void _toHomePage(BuildContext context) {
@@ -70,10 +70,10 @@ void _checkAuth(BuildContext context) async {
     String? password = prefs.password;
 
     // no user logged in the app
-    if (username == null || password == null) {
+    /*if (username == null || password == null) {
       Future.delayed(const Duration(seconds: 1), () => _toLoginPage(context));
-    } 
-    else {
+    } */
+    /*else {*/
       ImpactService service =
           Provider.of<ImpactService>(context, listen: false);
       bool responseAccessToken = await service.checkSavedToken(); //verifico i token corretti
@@ -87,7 +87,7 @@ void _checkAuth(BuildContext context) async {
         Future.delayed(
             const Duration(seconds: 1), () => _toImpactPage(context));
       }
-    }
+    
   }
 
   @override

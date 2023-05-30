@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app_wearable/pages/home.dart';
 import 'package:app_wearable/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
-//
+
 import '../../../services/impact.dart';
 
 class ImpactOnboarding extends StatefulWidget {
