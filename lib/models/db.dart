@@ -8,14 +8,14 @@ class Distance {
   Distance({required this.timestamp, required this.value});
 }
 
-class Steps {
+/*class Steps {
   // this class models the steps data point
   final DateTime timestamp;
   final double value;
 
   Steps({required this.timestamp, required this.value});
 }
-
+*/
 
 class FitbitGen {
   final Random _random = Random();
@@ -27,13 +27,13 @@ class FitbitGen {
             timestamp: DateTime.now().subtract(Duration(hours: index)),
             value: _random.nextDouble()));
   }
-  List<Steps> fetchSteps() {
+  /*List<Steps> fetchSteps() {
     return List.generate(
         100,
         (index) => Steps(
             timestamp: DateTime.now().subtract(Duration(hours: index)),
             value: _random.nextDouble()));
-  }
+  }*/
 }
 
 class CarbonPrint {

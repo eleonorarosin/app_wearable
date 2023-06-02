@@ -1,3 +1,4 @@
+import 'package:app_wearable/pages/CO2.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,7 @@ import 'package:app_wearable/pages/walk.dart';
 import 'package:app_wearable/pages/login/login.dart';
 import 'package:app_wearable/services/server_strings.dart';
 import 'package:app_wearable/utils/shared_preferences.dart';
+import 'package:app_wearable/services/impact.dart';
 
 class Home extends StatefulWidget {
   static const route = '/home/';
@@ -43,18 +45,20 @@ class _HomeState extends State<Home> {
   }) {
     switch (index) {
       case 0:
-        return Walk();
+        return CO2();
       case 1:
-        return Walk();
+        return CO2();
       default:
-        return Walk();
+        return CO2();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeProvider>(
-      create: (context) => HomeProvider(),
+      create: (context) => HomeProvider(
+        Provider.of<ImpactService>(context, listen: false)
+      ),
       builder: (context, child) => Scaffold(
         backgroundColor: const Color(0xFFE4DFD4),
         drawer: Drawer(
@@ -105,7 +109,7 @@ class _HomeState extends State<Home> {
                   padding: const EdgeInsets.only(left: 8.0, top: 8, bottom: 8),
                   onPressed: () async {
                     Provider.of<HomeProvider>(context, listen: false).refresh();
-
+                    
                   },
                   icon: const Icon(
                     MdiIcons.downloadCircle,

@@ -99,7 +99,7 @@ class Walk extends StatelessWidget {
                   series: <CircularSeries>[
                     RadialBarSeries<Map<String, dynamic>, String>(
                       dataSource: <Map<String, dynamic>>[
-                        {'steps': provider.steps}, //ci vanno i dati di steps, basta fare provider.steps
+                        {'steps':data}, //ci vanno i dati di steps, basta fare provider.steps
                       ],
                       xValueMapper: (Map<String, dynamic> data, _) => 'steps',
                       yValueMapper: (Map<String, dynamic> data, _) =>

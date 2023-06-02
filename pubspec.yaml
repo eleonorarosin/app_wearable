@@ -36,9 +36,11 @@ dependencies:
   syncfusion_flutter_charts: ^21.2.6
   intl: ^0.18.0
   shared_preferences: ^2.0.17
-  dio: ^5.0.0
   jwt_decoder: ^2.0.1
   flutter_login: ^4.1.1
+  http: ^0.13.4
+  dio: ^5.0.0
+  floor:
 
 
 
