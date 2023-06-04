@@ -32,15 +32,16 @@ dependencies:
     sdk: flutter
   feather_icons: ^1.2.0
   material_design_icons_flutter: ^6.0.7096
+  graphic: ^2.2.0
   provider: ^6.0.5
-  syncfusion_flutter_charts: ^21.2.6
-  intl: ^0.18.0
-  shared_preferences: ^2.0.17
+  intl: ^0.18.1
+  shared_preferences: ^2.1.1
   jwt_decoder: ^2.0.1
-  flutter_login: ^4.1.1
-  http: ^0.13.4
-  dio: ^5.0.0
+  dio: ^5.1.2
   floor:
+  sqflite: ^2.2.8+4
+  path: ^1.8.3
+  path_provider: ^2.0.15
 
 
 
@@ -60,6 +61,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  floor_generator: ^1.2.0
+  build_runner: ^2.1.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

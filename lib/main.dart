@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:app_wearable/pages/splash.dart';
-import 'package:provider/provider.dart';
-import 'package:app_wearable/utils/shared_preferences.dart';
 import 'package:app_wearable/services/impact.dart';
+import 'package:app_wearable/utils/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'models/db.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final db = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  runApp(Provider<AppDatabase>.value(value: db, child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
-  @override
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

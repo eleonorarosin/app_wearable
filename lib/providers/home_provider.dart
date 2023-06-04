@@ -1,5 +1,6 @@
 import 'dart:math';
 //
+import 'package:app_wearable/models/entities/entities.dart';
 import 'package:flutter/material.dart';
 import 'package:app_wearable/models/db.dart';
 import 'package:app_wearable/services/impact.dart';
@@ -11,75 +12,90 @@ import 'package:app_wearable/utils/shared_preferences.dart';
 // and on startup fetching the data from the online services
 class HomeProvider extends ChangeNotifier {
   // data to be used by the UI
-  late List<Distance> distance;
-  //late List<Steps> steps;
-  late List<CarbonPrint> carbonPrint;
-  //late double consumption;
-  
+  late List<FootDistances> dist;
+  late List<FootSteps> step;
+  late List<int> weekStep;
+  late double carbonPrint;
+  final AppDatabase db;
 
-  // data fetched from external services or db
-  late List<Distance> _distanceDB;
-  //late List<Steps> _stepsDB;
-  late List<CarbonPrint> _carbonPrintDB;
+  //data fetched from ezternal services
+  late List<FootDistances> _dist;
+  late List<FootSteps> _step;
 
   // selected day of data to be shown
   DateTime showDate = DateTime.now().subtract(const Duration(days: 1));
 
-  // data generators faking external services
-  final FitbitGen fitbitGen = FitbitGen();
-  final Random _random = Random();
-
-  // constructor of provider which manages the fetching of all data from the servers and then notifies the ui to build
-  DateTime lastFetch = DateTime.now().subtract(Duration(days: 2));
+  late DateTime lastFetch;
   final ImpactService impactService;
 
   bool doneInit = false;
 
-  HomeProvider(this.impactService) {
+  HomeProvider(this.impactService, this.db) {
     _init();
   }
-  
-   Future<void> _init() async {
+
+  // constructor of provider which manages the fetching of all data from the servers and then notifies the ui to build
+  Future<void> _init() async {
     await _fetchAndCalculate();
-    getDataOfDay(showDate);
+    await getDataOfDay(showDate);
     doneInit = true;
     notifyListeners();
   }
-  // method to fetch all data and calculate the exposure
-  Future<void> _fetchAndCalculate() async{
-    _distanceDB =await impactService.getDataFromDay(lastFetch);
-    //_stepsDB = fitbitGen.fetchSteps();
-    _calculateCarbonPrint(_distanceDB);
+
+  Future<DateTime?> _getLastFetch() async {  // E' SOLO UN CONTROLLO PER IL LAST FETCH???????
+    var data = await db.footDistancesDao.findAllDistances();
+    if (data.isEmpty) {
+      return null;
+    }
+    return data.last.dateTime;
+  }
+
+  Future<void> _fetchAndCalculate() async {
+    lastFetch = await _getLastFetch() ??
+        DateTime.now().subtract(const Duration(days: 2));
+    // do nothing if already fetched
+    if (lastFetch.day == DateTime.now().subtract(const Duration(days: 1)).day) {
+      return;
+    }
+    _dist = await impactService.getDistancesFromDay(lastFetch);
+    for (var element in _dist) {
+      db.footDistancesDao.insertDistance(element);
+    } // db add to the table
+
+    _step = await impactService.getStepsFromDay(lastFetch);
+    for (var element in _step) {
+      db.footStepsDao.insertSteps(element);
+    } // db add to the table
+
   }
 
   // method to trigger a new data fetching
-  void refresh() {
-    _fetchAndCalculate();
-    getDataOfDay(showDate);
+  Future<void> refresh() async {
+    await _fetchAndCalculate();
+    await getDataOfDay(showDate);
   }
 
-  // method that implements the state of the art formula
-  void _calculateCarbonPrint(List<Distance> dist) {
-    _carbonPrintDB = getCarbonPrint(dist);
-  }
-
-  // method to select only the data of the chosen day
-  void getDataOfDay(DateTime showDate) {
+   // method to select only the data of the chosen day
+  Future<void> getDataOfDay(DateTime showDate) async {
+    // check if the day we want to show has data
+    var firstDay = await db.footDistancesDao.findFirstDayInDb();
+    var lastDay = await db.footDistancesDao.findLastDayInDb();
+    if (showDate.isAfter(lastDay!.dateTime) ||
+        showDate.isBefore(firstDay!.dateTime)) return;
+        
     this.showDate = showDate;
-    distance = _distanceDB
-        .where((element) => element.timestamp.day == showDate.day)
-        .toList()
-        .reversed
-        .toList();
-    /*steps = _stepsDB
-        .where((element) => element.timestamp.day == showDate.day)
-        .toList()
-        .reversed
-        .toList();*/
-    /*fullprint = carbonPrint.map((e) => e.value).reduce(
-          (value, element) => value + element,
-        );*/
+    dist = await db.footDistancesDao.findDistancesbyDate(
+        DateUtils.dateOnly(showDate),
+        DateTime(showDate.year, showDate.month, showDate.day, 23, 59));
+    step = await db.footStepsDao.findStepsbyDate(
+        DateUtils.dateOnly(showDate),
+        DateTime(showDate.year, showDate.month, showDate.day, 23, 59));
+    /*weekStep = await db.footStepsDao.getSumStepsForLast7Days(
+        DateUtils.dateOnly(showDate),
+        DateTime(showDate.year, showDate.month, showDate.day, 23, 59));*/
+       
     // after selecting all data we notify all consumers to rebuild
     notifyListeners();
   }
+
 }

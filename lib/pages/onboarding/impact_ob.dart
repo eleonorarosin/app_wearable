@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:app_wearable/pages/home.dart';
 import 'package:app_wearable/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
-
 import '../../../services/impact.dart';
 
 class ImpactOnboarding extends StatefulWidget {
@@ -158,6 +157,8 @@ class _ImpactOnboardingState extends State<ImpactOnboarding> {
                           duration: Duration(seconds: 2),
                         ));
                       } else {
+                        await Provider.of<ImpactService>(context, listen: false)
+                            .getPatient();
                           Future.delayed(
                               const Duration(milliseconds: 300),
                               () => Navigator.of(context).pushReplacement(

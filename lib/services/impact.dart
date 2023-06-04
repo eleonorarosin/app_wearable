@@ -1,3 +1,4 @@
+import 'package:app_wearable/models/entities/entities.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:intl/intl.dart';
 import 'package:dio/dio.dart';
@@ -132,27 +133,50 @@ class ImpactService {
     return r.data['data'][0]['username'];
   }
 
-  Future<List<Distance>> getDataFromDay(DateTime startTime) async {
+  Future<List<FootDistances>> getDistancesFromDay(DateTime startTime) async {
     await updateBearer();
     Response r = await _dio.get(
         'data/v1/distance/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
     List<dynamic> data = r.data['data'];
-    List<Distance> dist = [];
+    List<FootDistances> dist = [];
     for (var daydata in data) {
       String day = daydata['date'];
       for (var dataday in daydata['data']) {
         String hour = dataday['time'];
         String datetime = '${day}T$hour';
         DateTime timestamp = _truncateSeconds(DateTime.parse(datetime));
-        Distance distnew = Distance(timestamp: timestamp, value: dataday['value']);
-        if (!dist.any((e) => e.timestamp.isAtSameMomentAs(distnew.timestamp))) {
+        FootDistances distnew = FootDistances(null, int.parse(dataday['value']), timestamp);
+        if (!dist.any((e) => e.dateTime.isAtSameMomentAs(distnew.dateTime))) {
           dist.add(distnew);
         }
       }
     }
     var distlist = dist.toList()
-      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
+      ..sort((a, b) => a.dateTime.compareTo(b.dateTime));
     return distlist;
+  }
+  
+  Future<List<FootSteps>> getStepsFromDay(DateTime startTime) async {
+    await updateBearer();
+    Response r = await _dio.get(
+        'data/v1/steps/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/');
+    List<dynamic> data = r.data['data'];
+    List<FootSteps> step = [];
+    for (var daydata in data) {
+      String day = daydata['date'];
+      for (var dataday in daydata['data']) {
+        String hour = dataday['time'];
+        String datetime = '${day}T$hour';
+        DateTime timestamp = _truncateSeconds(DateTime.parse(datetime));
+        FootSteps stepnew = FootSteps(null, int.parse(dataday['value']), timestamp);
+        if (!step.any((e) => e.dateTime.isAtSameMomentAs(stepnew.dateTime))) {
+          step.add(stepnew);
+        }
+      }
+    }
+    var steplist = step.toList()
+      ..sort((a, b) => a.dateTime.compareTo(b.dateTime));
+    return steplist;
   }
 
   DateTime _truncateSeconds(DateTime input) {
