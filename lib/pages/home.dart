@@ -37,7 +37,6 @@ class _HomeState extends State<Home> {
           elevation: 0,
           backgroundColor: const Color(0xFFE4DFD4),
           actions: [],),
-    
     );
             
               
