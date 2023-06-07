@@ -6,11 +6,12 @@ import 'package:app_wearable/providers/home_provider.dart';
 import 'package:app_wearable/pages/info.dart';
 import 'package:app_wearable/pages/walk.dart';
 import 'package:app_wearable/pages/CO2.dart';
-//import 'package:app_wearable/pages/login/login.dart';
+import 'package:app_wearable/pages/login/login.dart';
 import 'package:app_wearable/services/server_strings.dart';
 import 'package:app_wearable/utils/shared_preferences.dart';
 import 'package:app_wearable/services/impact.dart';
 import 'package:app_wearable/models/db.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   static const route = '/home/';
@@ -72,13 +73,10 @@ class _HomeState extends State<Home> {
                   leading: const Icon(MdiIcons.logout),
                   title: const Text('Logout'),
                   // delete all data from the database
-                  onTap: () async {
-                    bool reset = await Preferences().resetSettings();
-                      if (reset) {
-                        // ignore: use_build_context_synchronously
-                        Navigator.of(context).pushReplacementNamed(ImpactOnboarding.route);
-                      }
-                  }),
+                  onTap: () => {
+                    _toLoginPage(context),
+                  }
+                  ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text('About'),
@@ -134,5 +132,12 @@ class _HomeState extends State<Home> {
             currentIndex: _selIdx,
             onTap: _onItemTapped,
         )));
+  }
+  void _toLoginPage(BuildContext context) async{
+    final sp=await SharedPreferences.getInstance();
+    sp.remove('username');
+
+    Navigator.pop(context);
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login() ));
   }
 }
