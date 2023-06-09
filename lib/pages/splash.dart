@@ -7,7 +7,6 @@ import 'package:app_wearable/services/impact.dart';
 import 'package:app_wearable/utils/shared_preferences.dart';
 import 'package:provider/provider.dart';
 
-
 class Splash extends StatelessWidget {
   static const route = '/splash/';
   static const routeDisplayName = 'SplashPage';
@@ -39,14 +38,13 @@ class Splash extends StatelessWidget {
 
   String? _randomMessage;
 
-  
   /*void initState() {
    // super.initState();
     _randomMessage = _sustainabilityMessages[
         Random().nextInt(_sustainabilityMessages.length)];
   }*/
 
-    // Method for navigation SplashPage -> LoginPage
+  // Method for navigation SplashPage -> LoginPage
   void _toLoginPage(BuildContext context) {
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: ((context) => Login())));
@@ -64,37 +62,75 @@ class Splash extends StatelessWidget {
         MaterialPageRoute(builder: ((context) => ImpactOnboarding())));
   }
 
-void _checkAuth(BuildContext context) async {
-    var prefs = Provider.of<Preferences>(context, listen: false);  //senza il provider va inizializzato 
+  void _checkAuth(BuildContext context) async {
+    var prefs = Provider.of<Preferences>(context,
+        listen: false); //senza il provider va inizializzato
     String? username = prefs.username;
     String? password = prefs.password;
 
     // no user logged in the app
     if (username == null || password == null) {
       Future.delayed(const Duration(seconds: 1), () => _toLoginPage(context));
-    } 
-    /*else {*/
+    } else {
       ImpactService service =
           Provider.of<ImpactService>(context, listen: false);
-      bool responseAccessToken = await service.checkSavedToken(); //verifico i token corretti
+      bool responseAccessToken =
+          await service.checkSavedToken(); //verifico i token corretti
       bool refreshAccessToken = await service.checkSavedToken(refresh: true);
 
       // if we have a valid token for impact, proceed. verifico se purple air ha la pagina salvata
       if (responseAccessToken || refreshAccessToken) {
-        Future.delayed(
-              const Duration(seconds: 1), () => _toHomePage(context));
+        Future.delayed(const Duration(seconds: 1), () => _toHomePage(context));
       } else {
         Future.delayed(
             const Duration(seconds: 1), () => _toImpactPage(context));
       }
-    
+    }
+
+    @override
+    Widget build(BuildContext context) {
+      Future.delayed(const Duration(seconds: 5), () => _checkAuth(context));
+      _randomMessage = _sustainabilityMessages[
+          Random().nextInt(_sustainabilityMessages.length)];
+      return Material(
+        child: Container(
+          color: Color.fromARGB(255, 228, 223, 212),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text(
+                'GreenSteps',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 20, 134, 37),
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.energy_savings_leaf, size: 48),
+                  SizedBox(height: 16),
+                  Text(
+                    _randomMessage!,
+                    style: TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              CircularProgressIndicator(
+                strokeWidth: 4,
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF89453C)),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(
-        const Duration(seconds: 5),
-        () => _checkAuth( context));
+    Future.delayed(const Duration(seconds: 5), () => _checkAuth(context));
     _randomMessage = _sustainabilityMessages[
         Random().nextInt(_sustainabilityMessages.length)];
     return Material(
