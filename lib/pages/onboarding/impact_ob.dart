@@ -43,7 +43,7 @@ class _ImpactOnboardingState extends State<ImpactOnboarding> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              //Image.asset('assets/impact_logo.png'),
+              Image.asset('assets/impact_logo.png'),
               const Text('Please authorize to use our app',
                   style: TextStyle(
                     fontSize: 16,
@@ -83,7 +83,8 @@ class _ImpactOnboardingState extends State<ImpactOnboarding> {
                     color: Color.fromARGB(255, 20, 134, 37),
                   ),
                   hintText: 'Username',
-                  hintStyle: const TextStyle(color: Color.fromARGB(255, 20, 134, 37)),
+                  hintStyle:
+                      const TextStyle(color: Color.fromARGB(255, 20, 134, 37)),
                 ),
               ),
               const SizedBox(
@@ -134,7 +135,8 @@ class _ImpactOnboardingState extends State<ImpactOnboarding> {
                     },
                   ),
                   hintText: 'Password',
-                  hintStyle: const TextStyle(color: Color.fromARGB(255, 20, 134, 37)),
+                  hintStyle:
+                      const TextStyle(color: Color.fromARGB(255, 20, 134, 37)),
                 ),
               ),
               const Spacer(),
@@ -159,13 +161,12 @@ class _ImpactOnboardingState extends State<ImpactOnboarding> {
                       } else {
                         await Provider.of<ImpactService>(context, listen: false)
                             .getPatient();
-                          Future.delayed(
-                              const Duration(milliseconds: 300),
-                              () => Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => Home())));
-                        } 
-                      
+                        Future.delayed(
+                            const Duration(milliseconds: 300),
+                            () => Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => Home())));
+                      }
                     },
                     style: ButtonStyle(
                         //maximumSize: const MaterialStatePropertyAll(Size(50, 20)),
