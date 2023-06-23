@@ -16,6 +16,8 @@ class HomeProvider extends ChangeNotifier {
   late List<FootSteps> step;
   late List<int> weekStep;
   late double carbonPrint;
+  late int fullsteps;
+  late int fulldistances;
   final AppDatabase db;
 
   //data fetched from ezternal services
@@ -90,10 +92,8 @@ class HomeProvider extends ChangeNotifier {
     step = await db.footStepsDao.findStepsbyDate(
         DateUtils.dateOnly(showDate),
         DateTime(showDate.year, showDate.month, showDate.day, 23, 59));
-    /*weekStep = await db.footStepsDao.getSumStepsForLast7Days(
-        DateUtils.dateOnly(showDate),
-        DateTime(showDate.year, showDate.month, showDate.day, 23, 59));*/
-       
+    fullsteps= sumStepsofDay(step);
+    fulldistances=sumDistanceofDay(dist);
     // after selecting all data we notify all consumers to rebuild
     notifyListeners();
   }
