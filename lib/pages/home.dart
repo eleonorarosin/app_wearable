@@ -48,49 +48,47 @@ class _HomeState extends State<Home> {
   }) {
     switch (index) {
       case 0:
-        return CO2();
+        return Walk();
       case 1:
         return CO2();
       default:
-        return CO2();
+        return Walk();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeProvider>(
-      create: (context) => HomeProvider(
-        Provider.of<ImpactService>(context, listen: false),
-        Provider.of<AppDatabase>(context,listen: false)
-      ),
-      lazy: false,
-      builder: (context, child) => Scaffold(
-        backgroundColor: const Color(0xFFE4DFD4),
-        drawer: Drawer(
-          child: ListView(
-            children: [
-              ListTile(
-                  leading: const Icon(MdiIcons.logout),
-                  title: const Text('Logout'),
-                  // delete all data from the database
-                  onTap: () => {
-                    _toLoginPage(context),
-                  }
+        create: (context) => HomeProvider(
+            Provider.of<ImpactService>(context, listen: false),
+            Provider.of<AppDatabase>(context, listen: false)),
+        lazy: false,
+        builder: (context, child) => Scaffold(
+            backgroundColor: const Color(0xFFE4DFD4),
+            drawer: Drawer(
+              child: ListView(
+                children: [
+                  ListTile(
+                      leading: const Icon(MdiIcons.logout),
+                      title: const Text('Logout'),
+                      // delete all data from the database
+                      onTap: () => {
+                            _toLoginPage(context),
+                          }),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('About'),
                   ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('About'),
-              ),
-              ListTile(
-                  leading: const Icon(MdiIcons.informationOutline),
-                  title: const Text('App Information'),
-                  // delete all data from the database
-                  onTap: () => {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => InfoApp(),
-                        ))
-                      }),
-              /*ListTile(
+                  ListTile(
+                      leading: const Icon(MdiIcons.informationOutline),
+                      title: const Text('App Information'),
+                      // delete all data from the database
+                      onTap: () => {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => InfoApp(),
+                            ))
+                          }),
+                  /*ListTile(
                   leading: const Icon(MdiIcons.dotsHexagon),
                   title: const Text('Exposure Information'),
                   // delete all data from the database
@@ -99,45 +97,48 @@ class _HomeState extends State<Home> {
                           builder: (context) => InfoExposure(),
                         ))
                       }),*/
-            ],
-          ),
-        ),
-        appBar: AppBar(
-          iconTheme:
-              const IconThemeData(color: Color.fromARGB(255, 8, 112, 24)),
-          elevation: 0,
-          backgroundColor: const Color(0xFFE4DFD4),
-          actions: [
-              IconButton(
-                  padding: const EdgeInsets.only(left: 8.0, top: 8, bottom: 8),
-                  onPressed: () async {
-                    Provider.of<HomeProvider>(context, listen: false).refresh();
-                    
-                  },
-                  icon: const Icon(
-                    MdiIcons.downloadCircle,
-                    size: 30,
-                    color: Color.fromARGB(255, 8, 112, 24),
-                  )),]
-        ),
-        body: Provider.of<HomeProvider>(context).doneInit
-              ? _selectPage(index: _selIdx)
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ) /* _selectPage(index: _selIdx) */,
-          bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: const Color.fromARGB(255, 8, 112, 24),
-            selectedItemColor: const Color.fromARGB(255, 228, 223, 212),
-            items: navBarItems,
-            currentIndex: _selIdx,
-            onTap: _onItemTapped,
-        )));
+                ],
+              ),
+            ),
+            appBar: AppBar(
+                iconTheme:
+                    const IconThemeData(color: Color.fromARGB(255, 8, 112, 24)),
+                elevation: 0,
+                backgroundColor: const Color(0xFFE4DFD4),
+                actions: [
+                  IconButton(
+                      padding:
+                          const EdgeInsets.only(left: 8.0, top: 8, bottom: 8),
+                      onPressed: () async {
+                        Provider.of<HomeProvider>(context, listen: false)
+                            .refresh();
+                      },
+                      icon: const Icon(
+                        MdiIcons.downloadCircle,
+                        size: 30,
+                        color: Color.fromARGB(255, 8, 112, 24),
+                      )),
+                ]),
+            body: Provider.of<HomeProvider>(context).doneInit
+                ? _selectPage(index: _selIdx)
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  ) /* _selectPage(index: _selIdx) */,
+            bottomNavigationBar: BottomNavigationBar(
+              backgroundColor: const Color.fromARGB(255, 8, 112, 24),
+              selectedItemColor: const Color.fromARGB(255, 228, 223, 212),
+              items: navBarItems,
+              currentIndex: _selIdx,
+              onTap: _onItemTapped,
+            )));
   }
-  void _toLoginPage(BuildContext context) async{
-    final sp=await SharedPreferences.getInstance();
+
+  void _toLoginPage(BuildContext context) async {
+    final sp = await SharedPreferences.getInstance();
     sp.remove('username');
 
     Navigator.pop(context);
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login() ));
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => Login()));
   }
 }

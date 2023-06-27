@@ -44,7 +44,8 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<DateTime?> _getLastFetch() async {  // E' SOLO UN CONTROLLO PER IL LAST FETCH???????
+  Future<DateTime?> _getLastFetch() async {
+    //
     var data = await db.footDistancesDao.findAllDistances();
     if (data.isEmpty) {
       return null;
@@ -68,7 +69,6 @@ class HomeProvider extends ChangeNotifier {
     for (var element in _step) {
       db.footStepsDao.insertSteps(element);
     } // db add to the table
-
   }
 
   // method to trigger a new data fetching
@@ -77,25 +77,23 @@ class HomeProvider extends ChangeNotifier {
     await getDataOfDay(showDate);
   }
 
-   // method to select only the data of the chosen day
+  // method to select only the data of the chosen day
   Future<void> getDataOfDay(DateTime showDate) async {
     // check if the day we want to show has data
     var firstDay = await db.footDistancesDao.findFirstDayInDb();
     var lastDay = await db.footDistancesDao.findLastDayInDb();
     if (showDate.isAfter(lastDay!.dateTime) ||
         showDate.isBefore(firstDay!.dateTime)) return;
-        
+
     this.showDate = showDate;
     dist = await db.footDistancesDao.findDistancesbyDate(
         DateUtils.dateOnly(showDate),
         DateTime(showDate.year, showDate.month, showDate.day, 23, 59));
-    step = await db.footStepsDao.findStepsbyDate(
-        DateUtils.dateOnly(showDate),
+    step = await db.footStepsDao.findStepsbyDate(DateUtils.dateOnly(showDate),
         DateTime(showDate.year, showDate.month, showDate.day, 23, 59));
-    fullsteps= sumStepsofDay(step);
-    fulldistances=sumDistanceofDay(dist);
+    fullsteps = sumStepsofDay(step);
+    fulldistances = sumDistanceofDay(dist);
     // after selecting all data we notify all consumers to rebuild
     notifyListeners();
   }
-
 }

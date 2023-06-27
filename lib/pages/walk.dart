@@ -1,13 +1,13 @@
+import 'package:app_wearable/widgets/score_circular_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-//import 'package:syncfusion_flutter_charts/charts.dart';
-//import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:app_wearable/models/db.dart' as db;
 import 'package:app_wearable/providers/home_provider.dart';
 import 'package:provider/provider.dart';
 
-
-List<Map<String, dynamic>> data = [
+/*List<Map<String, dynamic>> data = [
   {'date': '2023-05-23', 'points': 1468},
   {'date': '2023-05-23', 'points': 1487},
   {'date': '2023-05-23', 'points': 1494},
@@ -48,22 +48,22 @@ List<Map<String, dynamic>> data = [
   {'date': '2021-10-13', 'points': 1496},
   {'date': '2021-10-14', 'points': 1527},
   {'date': '2021-10-14', 'points': 1527},
-];
+];*/
 
-/*class Walk extends StatelessWidget {
+class Walk extends StatelessWidget {
   static const route = '/Walk/';
   static const routeDisplayName = 'WalkPage';
 
   Walk({Key? key}) : super(key: key);
 
-  double steps= 2.5; //steps lo definizmo intero?
+  double steps = 2.5; //steps lo definizmo intero?
   DateTime day = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child:  Consumer<HomeProvider>(
+      child: Consumer<HomeProvider>(
         builder: (context, provider, child) => Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,84 +95,132 @@ List<Map<String, dynamic>> data = [
               child: SizedBox(
                 width: 150,
                 height: 150,
-                child: SfCircularChart(
-                  series: <CircularSeries>[
-                    RadialBarSeries<Map<String, dynamic>, String>(
-                      dataSource: <Map<String, dynamic>>[
-                        {'steps':data}, //ci vanno i dati di steps, basta fare provider.steps
-                      ],
-                      xValueMapper: (Map<String, dynamic> data, _) => 'steps',
-                      yValueMapper: (Map<String, dynamic> data, _) =>
-                          data['steps'],
-                      trackColor: const Color(0xFFE4DFD4),
-                      maximumValue: 5.0,
-                      enableTooltip: false,
-                    ),
-                  ],
-                  annotations: <CircularChartAnnotation>[
-                    CircularChartAnnotation(
-                      widget: Container(
+                child: CustomPaint(
+                  painter: ScoreCircularProgress(
+                      backColor: const Color(0xFF89453C).withOpacity(0.4),
+                      frontColor: const Color(0xFF89453C),
+                      strokeWidth: 20,
+                      value: provider.fullsteps / 1),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              '$steps', //numero di passi totali
+                              '${provider.fullsteps}',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
                                 color: Color.fromARGB(255, 8, 112, 24),
                               ),
                             ),
-                            /*const Text( // scritta sotto il num di passi, si può mettere /10000 o frasi varie
+                            if (provider.fullsteps <
+                                10000) // Aggiungi questa riga
+                              Text(
+                                'Take a step towards a healthier you. Lace up those shoes and let each stride bring you closer to your goals.',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color.fromARGB(255, 8, 112, 24),
+                                ),
+                              ),
+                            if (provider.fullsteps >=
+                                10000) // Aggiungi questa riga
+                              Text(
+                                'Congratulations on reaching your step goal! You have made great strides towards success and demonstrated your commitment to a healthy and sustainable lifestyle',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color.fromARGB(255, 8, 112, 24),
+
+                                  /*  RadialBarSeries<Map<String, dynamic>, String>(
+                        dataSource: <Map<String, dynamic>>[
+                          {
+                            'steps': provider.fullsteps
+                          }, //ci vanno i dati di steps, basta fare provider.steps
+                        ],
+                        xValueMapper: (Map<String, dynamic> data, _) => 'steps',
+                        yValueMapper: (Map<String, dynamic> data, _) =>
+                            data['steps'],
+                        trackColor: const Color(0xFFE4DFD4),
+                        maximumValue: 5.0,
+                        enableTooltip: false,
+                      ),
+            ],
+                  annotations: <CircularChartAnnotation>[
+                      CircularChartAnnotation(
+                        widget: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '$steps', //numero di passi totali
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 8, 112, 24),
+                                ),
+                              ),
+                              const Text( // scritta sotto il num di passi, si può mettere /10000 o frasi varie
                               'Low',
                               style: TextStyle(fontSize: 16),
-                            ),*/
+                            ),
+                            ],*/
+                                ),
+                              ),
                           ],
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
-            const Text(
-              'Weekly Trend',
-              style: TextStyle(
-                color: Color.fromARGB(255, 8, 112, 24),
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+          ],
+        ),
+      ),
+    );
+  }
+}
+              /*const Text(
+                'Weekly Trend',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 8, 112, 24),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                    icon: const Icon(Icons.navigate_before),
-                    onPressed: () {
-                      // here we use the access method to retrieve the Provider and use its values and methods
-                      final provider =
-                          Provider.of<HomeProvider>(context, listen: false);
-                      DateTime day = provider.showDate;
-                      provider
-                          .getDataOfDay(day.subtract(const Duration(days: 1)));
-                    }),
-                Consumer<HomeProvider>(
-                    builder: (context, value, child) => Text(
-                        DateFormat('dd MMMM yyyy').format(value.showDate))),
-                IconButton(
-                    icon: const Icon(Icons.navigate_next),
-                    onPressed: () {
-                      final provider =
-                          Provider.of<HomeProvider>(context, listen: false);
-                      DateTime day = provider.showDate;
-                      provider.getDataOfDay(day.add(const Duration(days: 1)));
-                    })
-              ],
-            ),
-            Consumer<HomeProvider>(
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                      icon: const Icon(Icons.navigate_before),
+                      onPressed: () {
+                        // here we use the access method to retrieve the Provider and use its values and methods
+                        final provider =
+                            Provider.of<HomeProvider>(context, listen: false);
+                        DateTime day = provider.showDate;
+                        provider.getDataOfDay(
+                            day.subtract(const Duration(days: 1)));
+                      }),
+                  Consumer<HomeProvider>(
+                      builder: (context, value, child) => Text(
+                          DateFormat('dd MMMM yyyy').format(value.showDate))),
+                  IconButton(
+                      icon: const Icon(Icons.navigate_next),
+                      onPressed: () {
+                        final provider =
+                            Provider.of<HomeProvider>(context, listen: false);
+                        DateTime day = provider.showDate;
+                        provider.getDataOfDay(day.add(const Duration(days: 1)));
+                      })
+                ],
+              ),*/
+              /*Consumer<HomeProvider>(
                 builder: (context, value, child) =>
                   SizedBox(
                     height: 200,
@@ -197,10 +245,10 @@ List<Map<String, dynamic>> data = [
                       ],
                     ),
                   ),
-                )            
-          ],
-        ),
-    ));
+                )  
+            ],
+          ),
+        ));
   }
   /*List<Map<String, dynamic>> _parseData(List<db.Exposure> data) {  //formato corretto dei dati
     return data
@@ -210,7 +258,5 @@ List<Map<String, dynamic>> data = [
             'points': e.value
           },
         )
-        .toList();
-  }*/
-}
-*/
+        .toList();*/*/
+
