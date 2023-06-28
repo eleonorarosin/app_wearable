@@ -83,7 +83,7 @@ class Splash extends StatelessWidget {
         Future.delayed(const Duration(seconds: 1), () => _toHomePage(context));
       } else {
         Future.delayed(
-            const Duration(seconds: 1), () => _toImpactPage(context));
+            const Duration(seconds: 1), () => _toLoginPage(context));
       }
     }
 

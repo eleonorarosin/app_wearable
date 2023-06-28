@@ -12,8 +12,7 @@ class CO2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-
+    //final _formKey = GlobalKey<FormState>();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Consumer<HomeProvider>(
@@ -50,7 +49,7 @@ class CO2 extends StatelessWidget {
                   children: [
                     const SizedBox(height: 10),
                     RadioListTile<int>(
-                      title: const Text('Diesel'),
+                      title: const Text('Gas'),
                       value: 0,
                       groupValue: provider.selectedCarType,
                       onChanged: (val) {
@@ -58,16 +57,8 @@ class CO2 extends StatelessWidget {
                       },
                     ),
                     RadioListTile<int>(
-                      title: const Text('Gas'),
-                      value: 1,
-                      groupValue: provider.selectedCarType,
-                      onChanged: (val) {
-                        provider.setSelectedCarType(val!);
-                      },
-                    ),
-                    RadioListTile<int>(
                       title: const Text('Electric'),
-                      value: 2,
+                      value: 1,
                       groupValue: provider.selectedCarType,
                       onChanged: (val) {
                         provider.setSelectedCarType(val!);
@@ -90,9 +81,9 @@ class CO2 extends StatelessWidget {
             Consumer<HomeProvider>(
               builder: (context, value, child) {
                 double co2Saved = 0.0;
-                if (provider.selectedCarType == 0 || provider.selectedCarType == 1) {
+                if (provider.selectedCarType == 0) {
                   co2Saved = 0.1879 * provider.fulldistances/100000;
-                } else if (provider.selectedCarType == 2) {
+                } else if (provider.selectedCarType == 1) {
                   co2Saved = 0.0525 * provider.fulldistances/100000;
                 }
                 return Center(
@@ -106,10 +97,10 @@ class CO2 extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      const Text(
-                        'kg of CO2 saved today',
+                      Text(
+                        "kg of CO2 you saved today by walking ${(provider.fulldistances/100000).toStringAsFixed(2)} km instead of driving",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: Colors.black,
                         ),
                       ),
