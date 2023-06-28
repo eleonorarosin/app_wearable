@@ -55,7 +55,7 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> _fetchAndCalculate() async {
     lastFetch = await _getLastFetch() ??
-        DateTime.now().subtract(const Duration(days: 2));
+      DateTime.now().subtract(const Duration(days: 2));
     // do nothing if already fetched
     if (lastFetch.day == DateTime.now().subtract(const Duration(days: 1)).day) {
       return;
@@ -94,6 +94,14 @@ class HomeProvider extends ChangeNotifier {
     fullsteps = sumStepsofDay(step);
     fulldistances = sumDistanceofDay(dist);
     // after selecting all data we notify all consumers to rebuild
+    notifyListeners();
+  }
+  int? _selectedCarType = 0; // Default to Diesel car
+
+  int? get selectedCarType => _selectedCarType;
+
+  void setSelectedCarType(int? carType) {
+    _selectedCarType = carType;
     notifyListeners();
   }
 }

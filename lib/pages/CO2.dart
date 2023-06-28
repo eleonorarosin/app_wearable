@@ -14,11 +14,8 @@ class CO2 extends StatelessWidget {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
 
-    double? radioValue;
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      // here we use a consumer to react to the changes in the provider, which are triggered by the notifyListener method
       child: Consumer<HomeProvider>(
         builder: (context, provider, child) => Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -49,60 +46,35 @@ class CO2 extends StatelessWidget {
               child: SizedBox(
                 width: 150,
                 height: 150,
-                child: Column(children: [
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      const SizedBox(width: 10),
-                      const Text('Car',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 20, 134, 37),
-                              fontSize: 17)),
-                      Radio(
-                        fillColor: MaterialStateColor.resolveWith(
-                            (states) => const Color.fromARGB(255, 20, 134, 37)),
-                        value: 0.1879,
-                        groupValue: radioValue,
-                        onChanged: (val) {
-                          radioValue = val;
-                        },
-                      ),
-                      const Text(
-                        'Diesel',
-                        style: TextStyle(fontSize: 17.0),
-                      ),
-                      Radio(
-                          fillColor: MaterialStateColor.resolveWith(
-                              (states) => Color.fromARGB(255, 20, 134, 37)),
-                          value: 0.1879,
-                          groupValue: radioValue,
-                          onChanged: (val) {
-                            radioValue = val;
-                          }),
-                      const Text(
-                        'Gas',
-                        style: TextStyle(
-                          fontSize: 17.0,
-                        ),
-                      ),
-                      Radio(
-                          fillColor: MaterialStateColor.resolveWith(
-                              (states) => Color.fromARGB(255, 20, 134, 37)),
-                          value: 0.0525,
-                          groupValue: radioValue,
-                          onChanged: (val) {
-                            radioValue = val;
-                          }),
-                      const Text(
-                        'Electric',
-                        style: TextStyle(
-                          fontSize: 17.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                ]),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    RadioListTile<int>(
+                      title: const Text('Diesel'),
+                      value: 0,
+                      groupValue: provider.selectedCarType,
+                      onChanged: (val) {
+                        provider.setSelectedCarType(val!);
+                      },
+                    ),
+                    RadioListTile<int>(
+                      title: const Text('Gas'),
+                      value: 1,
+                      groupValue: provider.selectedCarType,
+                      onChanged: (val) {
+                        provider.setSelectedCarType(val!);
+                      },
+                    ),
+                    RadioListTile<int>(
+                      title: const Text('Electric'),
+                      value: 2,
+                      groupValue: provider.selectedCarType,
+                      onChanged: (val) {
+                        provider.setSelectedCarType(val!);
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
             const Text(
@@ -115,43 +87,40 @@ class CO2 extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                    icon: const Icon(Icons.navigate_before),
-                    onPressed: () {
-                      // here we use the access method to retrieve the Provider and use its values and methods
-                      final provider =
-                          Provider.of<HomeProvider>(context, listen: false);
-                      DateTime day = provider.showDate;
-                      provider
-                          .getDataOfDay(day.subtract(const Duration(days: 1)));
-                    }),
-                Consumer<HomeProvider>(
-                    builder: (context, value, child) => Text(
-                        DateFormat('dd MMMM yyyy').format(value.showDate))),
-                IconButton(
-                    icon: const Icon(Icons.navigate_next),
-                    onPressed: () {
-                      final provider =
-                          Provider.of<HomeProvider>(context, listen: false);
-                      DateTime day = provider.showDate;
-                      provider.getDataOfDay(day.add(const Duration(days: 1)));
-                    })
-              ],
-            ),
             Consumer<HomeProvider>(
-                builder: (context, value, child) =>
-                    calculateCO2(value, provider.fulldistances))
+              builder: (context, value, child) {
+                double co2Saved = 0.0;
+                if (provider.selectedCarType == 0 || provider.selectedCarType == 1) {
+                  co2Saved = 0.1879 * provider.fulldistances/100000;
+                } else if (provider.selectedCarType == 2) {
+                  co2Saved = 0.0525 * provider.fulldistances/100000;
+                }
+                return Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        '${co2Saved.toStringAsFixed(2)}',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const Text(
+                        'kg of CO2 saved today',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
     );
-  }
-
-  Text calculateCO2(value, distances) {
-    return Text('${(value * distances)} kg of CO2 saved today',
-        style: TextStyle(fontSize: 16));
   }
 }
