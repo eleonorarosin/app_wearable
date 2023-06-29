@@ -56,9 +56,6 @@ class Walk extends StatelessWidget {
 
   Walk({Key? key}) : super(key: key);
 
-  double steps = 2.5; //steps lo definizmo intero?
-  DateTime day = DateTime.now();
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -97,84 +94,61 @@ class Walk extends StatelessWidget {
                 height: 150,
                 child: CustomPaint(
                   painter: ScoreCircularProgress(
-                      backColor: const Color(0xFF89453C).withOpacity(0.4),
-                      frontColor: const Color(0xFF89453C),
-                      strokeWidth: 20,
-                      value: provider.fullsteps / 1),
-                  child: Align(
+                    backColor: const Color(0xFF89453C).withOpacity(0.4),
+                    frontColor: const Color(0xFF89453C),
+                    strokeWidth: 20,
+                    value: provider.fullsteps /
+                        10000, // Adjust the value range based on your desired maximum steps
+                  ),
+                  child: Stack(
                     alignment: Alignment.center,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 40.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${provider.fullsteps}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Color.fromARGB(255, 8, 112, 24),
-                              ),
-                            ),
-                            if (provider.fullsteps <
-                                10000) // Aggiungi questa riga
-                              Text(
-                                'Take a step towards a healthier you. Lace up those shoes and let each stride bring you closer to your goals.',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Color.fromARGB(255, 8, 112, 24),
-                                ),
-                              ),
-                            if (provider.fullsteps >=
-                                10000) // Aggiungi questa riga
-                              Text(
-                                'Congratulations on reaching your step goal! You have made great strides towards success and demonstrated your commitment to a healthy and sustainable lifestyle',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Color.fromARGB(255, 8, 112, 24),
-
-                                  /*  RadialBarSeries<Map<String, dynamic>, String>(
-                        dataSource: <Map<String, dynamic>>[
-                          {
-                            'steps': provider.fullsteps
-                          }, //ci vanno i dati di steps, basta fare provider.steps
-                        ],
-                        xValueMapper: (Map<String, dynamic> data, _) => 'steps',
-                        yValueMapper: (Map<String, dynamic> data, _) =>
-                            data['steps'],
-                        trackColor: const Color(0xFFE4DFD4),
-                        maximumValue: 5.0,
-                        enableTooltip: false,
-                      ),
-            ],
-                  annotations: <CircularChartAnnotation>[
-                      CircularChartAnnotation(
-                        widget: Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '$steps', //numero di passi totali
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Color.fromARGB(255, 8, 112, 24),
-                                ),
-                              ),
-                              const Text( // scritta sotto il num di passi, si può mettere /10000 o frasi varie
-                              'Low',
-                              style: TextStyle(fontSize: 16),
-                            ),
-                            ],*/
-                                ),
-                              ),
-                          ],
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          '${provider.fullsteps}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 8, 112, 24),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  /*Text(
+                    '${provider.fullsteps}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Color.fromARGB(255, 8, 112, 24),
+                    ),
+                  ),*/
+                  if (provider.fullsteps < 10000)
+                    Text(
+                      'Take a step towards a healthier you. Lace up those shoes and let each stride bring you closer to your goals.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color.fromRGBO(6, 6, 6, 0.925),
+                      ),
+                    ),
+                  if (provider.fullsteps >= 10000)
+                    Text(
+                      'Congratulations on reaching your step goal! You have made great strides towards success and demonstrated your commitment to a healthy and sustainable lifestyle',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color.fromRGBO(6, 6, 6, 0.925),
+                      ),
+                    ),
+                ],
               ),
             ),
           ],
@@ -183,6 +157,7 @@ class Walk extends StatelessWidget {
     );
   }
 }
+
               /*const Text(
                 'Weekly Trend',
                 style: TextStyle(
