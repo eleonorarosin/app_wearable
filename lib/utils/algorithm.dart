@@ -9,7 +9,7 @@ int sumStepsofDay(List<FootSteps> footsteps) {
     sum += steps.value;
   }
   return sum;
-  }
+}
 
 /*Future<List<int>> getSumStepsForLast7Days(DateTime dateOnly, DateTime dateTime) async {
   final DateTime today = DateTime.now();
@@ -35,7 +35,6 @@ int sumStepsofDay(List<FootSteps> footsteps) {
   return sumStepsList;
 }*/
 
-
 int sumDistanceofDay(List<FootDistances> footdistances) {
   //final List<FootSteps> stepsList =[];
   int sum = 0;
@@ -43,4 +42,4 @@ int sumDistanceofDay(List<FootDistances> footdistances) {
     sum += distances.value;
   }
   return sum;
-  }
+}

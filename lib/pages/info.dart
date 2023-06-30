@@ -35,7 +35,7 @@ class InfoApp extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                      'We have developed a sustainability app that tracks users steps, motivates them through messages, calculates their carbon footprint, and promotes environmental consciousness. It encourages walking or using public transportation instead of driving, providing incentives and educational content. By taking small steps towards sustainability, users can make a positive impact on the environment and combat climate change.'),
+                      'We have developed a sustainability app that tracks users steps, motivates them through messages, calculates the CO2 emissions saved (we have incorporated a formula based on existing literature that allows us to convert the distance traveled by car into kilograms of CO2 emitted by the vehicle), and promotes environmental consciousness. Our goal is to encourage users to reach a minimum of 10,000 steps per day, as it contributes to sustainable development. Walking 10,000 steps per day is a recommended practice by experts for maintaining a healthy lifestyle, but it also has a significant impact on sustainable development. By reducing car usage and opting for walking or public transportation, we can decrease carbon emissions and improve air quality in our communities. Additionally, walking promotes an active lifestyle and contributes to individuals physical and mental well-being.'),
                 ]),
           )),
         ));

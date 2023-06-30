@@ -1156,6 +1156,7 @@ class ImpactService {
         }
       }
     }
+
     var footsteplist = footstep.toList()
       ..sort((a, b) => a.dateTime.compareTo(b.dateTime));
     return footsteplist;

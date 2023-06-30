@@ -1,3 +1,4 @@
+import 'package:app_wearable/models/entities/entities.dart';
 import 'package:app_wearable/widgets/score_circular_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -151,50 +152,70 @@ class Walk extends StatelessWidget {
                 ],
               ),
             ),
+            const Text(
+              'Daily Trend',
+              style: TextStyle(
+                color: Color.fromARGB(255, 8, 112, 24),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.navigate_before),
+                  onPressed: () {
+                    // here we use the access method to retrieve the Provider and use its values and methods
+                    final provider =
+                        Provider.of<HomeProvider>(context, listen: false);
+                    DateTime day = provider.showDate;
+                    provider
+                        .getDataOfDay(day.subtract(const Duration(days: 1)));
+                  },
+                ),
+                Consumer<HomeProvider>(
+                  builder: (context, value, child) => Text(
+                    DateFormat('dd').format(value.showDate),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.navigate_next),
+                  onPressed: () {
+                    final provider =
+                        Provider.of<HomeProvider>(context, listen: false);
+                    DateTime day = provider.showDate;
+                    provider.getDataOfDay(day.add(const Duration(days: 1)));
+                  },
+                ),
+              ],
+            ),
+            Consumer<HomeProvider>(
+              builder: (context, value, child) => SizedBox(
+                height: 200,
+                child: SfCartesianChart(
+                  primaryXAxis: CategoryAxis(),
+                  primaryYAxis: NumericAxis(),
+                  series: <ChartSeries>[
+                    ColumnSeries<FootSteps, DateTime>(
+                      dataSource: provider.step,
+                      xValueMapper: (FootSteps data, _) => data.dateTime,
+                      yValueMapper: (FootSteps data, _) => data.value,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-              /*const Text(
-                'Weekly Trend',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 8, 112, 24),
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                      icon: const Icon(Icons.navigate_before),
-                      onPressed: () {
-                        // here we use the access method to retrieve the Provider and use its values and methods
-                        final provider =
-                            Provider.of<HomeProvider>(context, listen: false);
-                        DateTime day = provider.showDate;
-                        provider.getDataOfDay(
-                            day.subtract(const Duration(days: 1)));
-                      }),
-                  Consumer<HomeProvider>(
-                      builder: (context, value, child) => Text(
-                          DateFormat('dd MMMM yyyy').format(value.showDate))),
-                  IconButton(
-                      icon: const Icon(Icons.navigate_next),
-                      onPressed: () {
-                        final provider =
-                            Provider.of<HomeProvider>(context, listen: false);
-                        DateTime day = provider.showDate;
-                        provider.getDataOfDay(day.add(const Duration(days: 1)));
-                      })
-                ],
-              ),*/
+             
               /*Consumer<HomeProvider>(
                 builder: (context, value, child) =>
                   SizedBox(
