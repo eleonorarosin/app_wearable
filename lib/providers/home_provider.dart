@@ -14,10 +14,10 @@ class HomeProvider extends ChangeNotifier {
   // data to be used by the UI
   late List<FootDistances> dist;
   late List<FootSteps> step;
-  late List<int> weekStep;
-  late double carbonPrint;
+  
   late int fullsteps;
   late int fulldistances;
+  late List<FootSteps> steps3h;
   final AppDatabase db;
 
   //data fetched from ezternal services
@@ -93,6 +93,7 @@ class HomeProvider extends ChangeNotifier {
         DateTime(showDate.year, showDate.month, showDate.day, 23, 59));
     fullsteps = sumStepsofDay(step);
     fulldistances = sumDistanceofDay(dist);
+    steps3h=calculateStepsSumByInterval(step);
 
     // after selecting all data we notify all consumers to rebuild
     notifyListeners();

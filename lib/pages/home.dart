@@ -29,11 +29,11 @@ class _HomeState extends State<Home> {
   List<BottomNavigationBarItem> navBarItems = [
     const BottomNavigationBarItem(
       icon: Icon(MdiIcons.walk),
-      label: 'Activity',
+      label: 'Steps',
     ),
     const BottomNavigationBarItem(
       icon: Icon(MdiIcons.moleculeCo2),
-      label: ('Carbon print'),
+      label: ('Environment'),
     ),
   ];
 

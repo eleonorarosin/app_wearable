@@ -90,7 +90,7 @@ class CO2 extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        '${co2Saved.toStringAsFixed(2)}',
+                        '${co2Saved.toStringAsFixed(2)} kg',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -98,7 +98,7 @@ class CO2 extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "kg of CO2 you saved today by walking ${(provider.fulldistances/100000).toStringAsFixed(2)} km instead of driving",
+                        "Today, your eco-conscious choices made a difference! By walking and engaging in exercise sessions, you helped reduce CO2 emissions and contributed to a greener planet.",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,
