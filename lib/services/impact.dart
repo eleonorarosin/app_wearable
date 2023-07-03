@@ -15,7 +15,6 @@ import '../models/db.dart';
 class ImpactService {
   ImpactService(this.prefs);
   Preferences prefs;
-//   //serve per poterle poi utilizzare, servizio per fare chiamate unico e non rischio di avere più sezioni aperte
 
   getRequest() async {
     try {
@@ -83,8 +82,6 @@ class ImpactService {
       return true;
     } else {
       //if
-
-      //Just return the status code
       return false;
     }
   }
@@ -99,15 +96,12 @@ class ImpactService {
     Map<String, dynamic> body = json.decode(r.body);
     prefs.impactUsername = body['data'][0]['username'];
     return body['data'][0]['username'];
-    //vado a vedere se un paziente, aggiorno prima paziente per fare chiamata da autorizzati poi faccio una get e poi dalla risposta prendo il primo utente, lo salvo in preferences
-    //restituisco username
   }
 
   Future<List<FootDistances>> getDistancesFromDay(DateTime startTime) async {
     final sp = await SharedPreferences.getInstance();
     String access = sp.getString('access')!;
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
-    // dynamic r = await http.get(Uri.parse(ServerStrings.backendBaseUrl+'/data/v1/distance/patients/${prefs.impactUsername}/day/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/'),headers: headers);
     dynamic r = await http.get(
         Uri.parse(ServerStrings.backendBaseUrl +
             'data/v1/distance/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/'),
@@ -117,8 +111,10 @@ class ImpactService {
     Map<String, dynamic> body = json.decode(r.body);
     List<dynamic> data = body['data'];
     List<FootDistances> distance = [];
+
     for (var daydata in data) {
       String day = daydata['date']; 
+
       for (var dataday in daydata['data']) {
         String hour = dataday['time'];
         String datetime = '${day}T$hour';
@@ -131,6 +127,7 @@ class ImpactService {
         }
       }
     }
+
     var distancelist = distance.toList()
       ..sort((a, b) => a.dateTime.compareTo(b.dateTime));
     return distancelist;
@@ -140,7 +137,6 @@ class ImpactService {
     final sp = await SharedPreferences.getInstance();
     String access = sp.getString('access')!;
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
-    //dynamic r = await http.get(Uri.parse(ServerStrings.backendBaseUrl+'/data/v1/steps/patients/${prefs.impactUsername}/day/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/'),headers: headers);
     dynamic r = await http.get(
         Uri.parse(ServerStrings.backendBaseUrl +
             '/data/v1/steps/patients/${prefs.impactUsername}/daterange/start_date/${DateFormat('y-M-d').format(startTime)}/end_date/${DateFormat('y-M-d').format(DateTime.now().subtract(const Duration(days: 1)))}/'),
@@ -148,8 +144,10 @@ class ImpactService {
     Map<String, dynamic> body = json.decode(r.body);
     List<dynamic> data = body['data'];
     List<FootSteps> footstep = [];
+
     for (var daydata in data) {
       String day = daydata['date']; 
+
       for (var dataday in daydata['data']) {
         String hour = dataday['time'];
         String datetime = '${day}T$hour';
