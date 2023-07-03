@@ -143,7 +143,7 @@ class Walk extends StatelessWidget {
                 ),
                 Consumer<HomeProvider>(
                   builder: (context, value, child) => Text(
-                    DateFormat('dd').format(value.showDate),
+                    DateFormat('MMM-dd').format(value.showDate),
                   ),
                 ),
                 IconButton(
