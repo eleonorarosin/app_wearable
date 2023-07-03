@@ -10,15 +10,6 @@ abstract class FootStepsDao {
   @Query('SELECT * FROM FootSteps WHERE dateTime between :startTime and :endTime ORDER BY dateTime ASC')
   Future<List<FootSteps>> findStepsbyDate(DateTime startTime, DateTime endTime);
 
-  /*Future<int> findStepsbyDate(DateTime startTime, DateTime endTime) async {
-  final List<FootSteps> stepsList = await _findStepsbyDate(startTime, endTime);
-  int sum = 0;
-  for (final steps in stepsList) {
-    sum += steps.value;
-  }
-  return sum;
-  }*/
-
   //Query #1: SELECT -> this allows to obtain all the entries of the Step table
   @Query('SELECT * FROM FootSteps')
   Future<List<FootSteps>> findAllSteps();

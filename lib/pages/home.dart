@@ -88,15 +88,6 @@ class _HomeState extends State<Home> {
                               builder: (context) => InfoApp(),
                             ))
                           }),
-                  /*ListTile(
-                  leading: const Icon(MdiIcons.dotsHexagon),
-                  title: const Text('Exposure Information'),
-                  // delete all data from the database
-                  onTap: () => {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => InfoExposure(),
-                        ))
-                      }),*/
                 ],
               ),
             ),

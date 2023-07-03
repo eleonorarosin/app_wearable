@@ -37,7 +37,6 @@ class ImpactService {
   }
 
   String? retrieveSavedToken(bool refresh) {
-    //mi rcorda preferences necessarie
     if (refresh) {
       return prefs.impactRefreshToken;
     } else {
@@ -100,7 +99,7 @@ class ImpactService {
     Map<String, dynamic> body = json.decode(r.body);
     prefs.impactUsername = body['data'][0]['username'];
     return body['data'][0]['username'];
-    //vado a vedere se un paziente, aggiorno prima paziente per fare chiamata da utorizzati poi faccio una get e poi dalla risposta prendo il primo utente, lo salvo in preferences
+    //vado a vedere se un paziente, aggiorno prima paziente per fare chiamata da autorizzati poi faccio una get e poi dalla risposta prendo il primo utente, lo salvo in preferences
     //restituisco username
   }
 
@@ -116,12 +115,10 @@ class ImpactService {
     print(r);
 
     Map<String, dynamic> body = json.decode(r.body);
-    //List<dynamic> data = body['data']['date'];
     List<dynamic> data = body['data'];
-    //List<Distance> distance = body['data'][1]['data'];
     List<FootDistances> distance = [];
     for (var daydata in data) {
-      String day = daydata['date']; //prendo stringa prento il time e ricompatto
+      String day = daydata['date']; 
       for (var dataday in daydata['data']) {
         String hour = dataday['time'];
         String datetime = '${day}T$hour';
@@ -150,10 +147,9 @@ class ImpactService {
         headers: headers);
     Map<String, dynamic> body = json.decode(r.body);
     List<dynamic> data = body['data'];
-    //List<FootStep> footstep = body['data'][1]['data'];
     List<FootSteps> footstep = [];
     for (var daydata in data) {
-      String day = daydata['date']; //prendo stringa prento il time e ricompatto
+      String day = daydata['date']; 
       for (var dataday in daydata['data']) {
         String hour = dataday['time'];
         String datetime = '${day}T$hour';

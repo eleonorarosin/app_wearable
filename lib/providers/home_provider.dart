@@ -99,7 +99,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int? _selectedCarType = 0; // Default to Diesel car
+  int? _selectedCarType = 0; // Default to gas or diesel car
 
   int? get selectedCarType => _selectedCarType;
 

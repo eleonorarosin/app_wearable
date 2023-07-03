@@ -49,7 +49,7 @@ class CO2 extends StatelessWidget {
                   children: [
                     const SizedBox(height: 10),
                     RadioListTile<int>(
-                      title: const Text('Gas'),
+                      title: const Text('Gas or Diesel'),
                       value: 0,
                       groupValue: provider.selectedCarType,
                       onChanged: (val) {

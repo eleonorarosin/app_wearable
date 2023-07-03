@@ -42,6 +42,13 @@ class Walk extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const Text(
+      'Your goal is 10000 steps',
+      style: TextStyle(
+        color: Color.fromARGB(255, 8, 112, 24),
+        fontSize: 16,
+      ),
+    ),
             const SizedBox(
               height: 20,
             ),
